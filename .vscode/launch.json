@@ -7,9 +7,9 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "启动程序",
+      "name": "调试当前文件",
       "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}/src/middle/lengthOfLongestSubstring.js",
+      "program": "${workspaceFolder}/${relativeFile}",
       "runtimeExecutable": "/Users/abbylolo/.nvm/versions/node/v16.15.1/bin/node"
     }
   ]

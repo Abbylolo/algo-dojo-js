@@ -44,6 +44,40 @@ maxSubArray = function (nums) {
     return maxSum;
 }
 
+/**
+ * 法三：分治法（没懂 🌟🌟）
+ * 时间复杂度：O(n) 空间复杂度：O(logn)
+ * 分治法：分治法是一种将问题分解为更小的子问题，分别求解这些子问题，然后将结果合并以得到原问题解的算法设计方法。它适用于具有 可分割性 和 可合并性 的问题。
+ * 思路：将数组一分为二，分别求解左右两边的最大和，然后合并结果
+ */
+function Status(l, r, m, i) {
+    this.lSum = l; // 包含左端点的最大子段和
+    this.rSum = r; // 包含右端点的最大子段和
+    this.mSum = m; // 区间内的最大子段和
+    this.iSum = i; // 区间所有数的和
+}
+
+const pushUp = (l, r) => {
+    const iSum = l.iSum + r.iSum;
+    const lSum = Math.max(l.lSum, l.iSum + r.lSum);
+    const rSum = Math.max(r.rSum, r.iSum + l.rSum);
+    const mSum = Math.max(Math.max(l.mSum, r.mSum), l.rSum + r.lSum);
+    return new Status(lSum, rSum, mSum, iSum);
+}
+
+const getInfo = (a, l, r) => {
+    if (l === r) {
+        return new Status(a[l], a[l], a[l], a[l]);
+    }
+    const m = (l + r) >> 1;
+    const lSub = getInfo(a, l, m);
+    const rSub = getInfo(a, m + 1, r);
+    return pushUp(lSub, rSub);
+}
+
+maxSubArray = function(nums) {
+    return getInfo(nums, 0, nums.length - 1).mSum;
+};
 
 
 

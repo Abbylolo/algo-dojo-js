@@ -19,27 +19,34 @@
 /**
  * 法一：迭代
  * 时间复杂度：O(n) 空间复杂度：O(1)
- * 思路：遍历链表，将当前节点的next指针改为指向前一个节点，下一个节点的next指向自己，下一个节点指向自己的next
+ * 思路：遍历链表，将当前节点的next指针改为指向前一个节点，下一个节点的next指向自己
  */
 var reverseList = function (head) {
-    let prevNode = null, currNode = head
-    while (currNode !== null) {
-        let currNodeNext = currNode.next
-        currNode.next = prevNode
-        prevNode = currNode
-        currNode = currNodeNext
+    let prevNode = null,
+      currNode = head;
+    while (currNode) {
+        const nextNode = currNode.next; // 存储后一个节点
+
+        currNode.next = prevNode; // 改变当前节点指向。将当前节点的next指针改为指向前一个节点
+        // 链路后退至下一个节点
+        prevNode = currNode;
+        currNode = nextNode;
     }
-    return prevNode
+    return prevNode;
 };
 
 
 /**
- * 法二：递归
+ * 法二：递归🌟
  * 时间复杂度：O(n) 空间复杂度：O(n)
- * 思路：递归遍历链表，将当前节点的next指针改为指向前一个节点，下一个节点的next指向自己，下一个节点指向自己的next
+ * 思路：1、先递归到链表末尾 2、然后在回溯的过程中，逐步改变指针方向
  */
 reverseList = function (head) { 
-    
+    if (!head || !head.next) return head;
+    const newHead = reverseList(head.next);
+    head.next.next = head;
+    head.next = null;
+    return newHead;
 }
 
 

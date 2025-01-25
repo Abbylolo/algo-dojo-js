@@ -36,5 +36,5 @@ var addStrings = function (num1, num2) {
 
 // 测试
 console.log(addStrings("6611", "123")); // "134"
-console.log(addStrings("889333852702227987", "85731737104263")); // "9419584439332250"
+console.log(addStrings("9333852702227987", "85731737104263")); // "9419584439332250"
 console.log(addStrings("1", "9")); // "10"

@@ -1,0 +1,13 @@
+{
+  "Review Record": {
+    "prefix": [
+      "review",
+      "rv",
+      "复习"
+    ],
+    "body": [
+      "reviewRecord：[]2025-01-27 []2025-01-29 []2025-02-02 []2025-02-10"
+    ],
+    "description": "生成reviewRecord时间"
+  }
+}

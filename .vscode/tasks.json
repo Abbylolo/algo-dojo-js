@@ -1,0 +1,28 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "启动代码片段更新服务",
+            "type": "shell",
+            "command": "pm2 start ecosystem.config.js",
+            // 在项目打开时启动
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+            "presentation": {
+                "reveal": "silent",
+                "close": true
+            }
+        },
+        {
+            "label": "停止代码片段更新服务",
+            "type": "shell",
+            "command": "pm2 stop snippet-updater",
+            "problemMatcher": [],
+            // 在项目关闭时停止
+            "runOptions": {
+                "runOn": "folderClose"
+            }
+        }
+    ]
+} 

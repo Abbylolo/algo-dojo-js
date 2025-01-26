@@ -11,7 +11,7 @@ node_modules/
 .idea/
 .vscode/*
 !.vscode/tasks.json
-!.vscode/复习记录.code-snippets
+!.vscode/reviewRecord.code-snippets
 
 # macOS 系统文件
 .DS_Store

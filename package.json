@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "update-snippet": "node scripts/updateReviewSnippet.js",
+    "pm2:start": "pm2 start ecosystem.config.js",
+    "pm2:stop": "pm2 stop snippet-updater",
+    "pm2:restart": "pm2 restart snippet-updater",
+    "pm2:logs": "pm2 logs snippet-updater",
+    "pm2:status": "pm2 status",
+    "pm2:monit": "pm2 monit"
+  },
+  "dependencies": {
+    "pm2": "^5.4.3",
+    "node-cron": "^3.0.3"
+  }
+}

@@ -18,11 +18,13 @@
  * 时间复杂度：O(n) 空间复杂度：O(1)
  * 贪心算法：在对问题求解时，总是做出在当前看来是最好的选择。
  * 思路：若当前指针所指元素之前的和小于0，则丢弃当前元素之前的数列
+ * 
+ * 差异点：使用单个变量 currSum 来维护状态，空间复杂度为 O(1)
  */
 var maxSubArray = function (nums) {
     let currSum = (maxSum = nums[0]);
     for (let i = 1; i < nums.length; i++) {
-      currSum = Math.max(nums[i], currSum + nums[i]);
+      currSum = currSum < 0? nums[i]: currSum + nums[i];
       maxSum = Math.max(currSum, maxSum);
     }
     return maxSum;
@@ -31,15 +33,22 @@ var maxSubArray = function (nums) {
 /**
  * 法二：动态规划
  * 时间复杂度：O(n) 空间复杂度：O(n)
- * 动态规划：动态规划（Dynamic Programming, DP）是一种通过将问题分解为更小的子问题，逐步求解并存储中间结果，从而避免重复计算的优化方法。它适用于具有 重叠子问题 和 最优子结构 的问题。
- * 思路：若前一个元素大于0，则将当前元素与前一个元素相加，否则当前元素为最大和，将该最大和记录到当前元素值上
+ * 动态规划：动态规划（Dynamic Programming, DP）是一种通过将问题分解为更小的子问题，逐步求解并存储中间结果，从而避免重复计算的优化方法。
+ * 思路：
+ * 1. 定义dp数组：dp[i]表示以nums[i]结尾的最大子数组和【存储中间状态，存储每个位置的最优解】
+ * 2. 状态转移方程：dp[i] = max(dp[i-1] + nums[i], nums[i])【对于每个位置 i，要么与前面的子数组连接（dp[i-1] + nums[i]），要么自己独立成为新的子数组（nums[i]）】
+ * 3. 初始状态：dp[0] = nums[0]
+ * 
+ * 差异点：使用dp数组来存储中间状态，空间复杂度为 O(n)
  */
 maxSubArray = function (nums) {
-    let dp = nums[0], // 当前元素位置最大和
-      maxSum = nums[0]; // 最大和
+    const dp = new Array(nums.length);
+    dp[0] = nums[0];
+    let maxSum = dp[0];
+    
     for (let i = 1; i < nums.length; i++) {
-      dp = Math.max(nums[i], nums[i] + dp); // 若前一个元素大于0，则将当前元素与前一个元素相加，否则当前元素为最大和，将该最大和记录到当前元素值上
-      maxSum = Math.max(dp, maxSum);
+        dp[i] = Math.max(dp[i-1] + nums[i], nums[i]);
+        maxSum = Math.max(maxSum, dp[i]);
     }
     return maxSum;
 }

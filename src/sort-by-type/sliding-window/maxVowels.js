@@ -41,4 +41,22 @@ var maxVowels = function(s, k) {
     return maxV
 }
 
+var maxVowels = function(s, k) {
+    let maxV = 0, curV = 0, vowelLetter = 'aeiou'
+    let left = -k, right = -1
+    while(right < s.length) {
+        if(vowelLetter.includes(s[right + 1])) {
+            curV++
+        }
+        if(left >= 0 && vowelLetter.includes(s[left])) {
+            curV--
+        }
+        left++
+        right++
+        maxV = Math.max(maxV, curV)
+        if(maxV === k) break
+    }
+    return maxV
+};
+
 console.log(maxVowels("havefunonleetcode", 5)); // 3

@@ -3,6 +3,7 @@
  * @param {string} s
  * @param {number} k
  * @return {number}
+ * @link https://leetcode.cn/problems/maximum-number-of-vowels-in-a-substring-of-given-length
  *
  * 给你一个字符串 s 和一个整数 k 。请你从 s 中选出一个子字符串并计算该子字符串中包含的字符种数不超过 k 的 最长子字符串 的长度。
  *

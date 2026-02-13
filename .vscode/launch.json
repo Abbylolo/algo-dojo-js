@@ -8,9 +8,10 @@
       "type": "node",
       "request": "launch",
       "name": "调试当前文件",
-      "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}/${relativeFile}",
-      "runtimeExecutable": "/Users/abbylolo/.nvm/versions/node/v16.15.1/bin/node"
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/${relativeFile}"
     }
   ]
 }

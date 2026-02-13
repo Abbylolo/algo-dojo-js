@@ -23,6 +23,7 @@ var equalSubstring = function (s, t, maxCost) {
     for (let right = 0; right < s.length; right++) {
         const diff = Math.abs(t[right].charCodeAt() - s[right].charCodeAt())
         sumCost += diff
+        // while可以改成if：if内将left++然后right++相当于平移窗口，因为求的是最大窗口，即窗口[left, right)滑动时内可能不符合条件，但并不妨碍找到最大窗口
         while (sumCost > maxCost) {
             sumCost -= Math.abs(t[left].charCodeAt() - s[left].charCodeAt())
             left++

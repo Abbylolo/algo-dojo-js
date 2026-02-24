@@ -34,8 +34,9 @@
  */
 var shortestBeautifulSubstring = function (s, k) {
     // 求最短子串。条件：1个数===k且字典序最小
-    if (s.replace('0', '').length < k) return ''
-    let ans = '', left = 0, cnt = 0
+    // 什么时候移动左端点？窗口内1的个数 > k or 左端点是0
+    if (s.replaceAll('0', '').length < k) return ''
+    let ans = s, left = 0, cnt = 0
     for (let right = 0; right < s.length; right++) {
         cnt += s[right] - '0'
         while (cnt > k || s[left] === '0') {
@@ -44,8 +45,8 @@ var shortestBeautifulSubstring = function (s, k) {
         }
         if (cnt === k) {
             const subStr = s.substring(left, right + 1)
-            if (ans === '' || (ans.length > subStr.length)
-                || (ans.length === subStr.length && subStr < ans)) {
+            if (ans.length > subStr.length
+                || ans.length === subStr.length && subStr < ans) {
                 ans = subStr
             }
         }

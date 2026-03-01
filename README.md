@@ -104,3 +104,6 @@
    * 动态规划：需要记录所有或必要的子问题解
 
 ## 三、广度优先遍历BFS
+
+
+刷题题单方法技巧参考：https://leetcode.cn/discuss/post/3578981/ti-dan-hua-dong-chuang-kou-ding-chang-bu-rzz7/

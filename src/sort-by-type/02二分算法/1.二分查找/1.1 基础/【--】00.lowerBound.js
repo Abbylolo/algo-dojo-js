@@ -35,11 +35,11 @@ let lowerBound2 = function (nums, target) {
     return right // 即left(最终退出循环时left=right)
 }
 
-// 三、左开右开区间(left, right)
+// 三、左开右开区间(left, right) -- 推荐
 // 循环不变量：(left, right)区间内都是未确定的数，right及右边是确定满足条件的
 let lowerBound3 = function (nums, target) {
     let left = -1, right = nums.length
-    while (right - left > 1) { // 保证区间有数
+    while (left + 1 < right) { // 保证区间有数
         let mid = Math.floor((left + right) / 2);
         if (nums[mid] < target) { // mid及左部分不满足，右边找(mid, right)
             left = mid // 因为左边是开区间，所以设为mid是不取到mid的
@@ -47,7 +47,7 @@ let lowerBound3 = function (nums, target) {
             right = mid
         }
     }
-    return right
+    return right // 如果不存在(都小于target) ，返回nums.length
 }
 
 

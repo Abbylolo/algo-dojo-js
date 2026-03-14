@@ -9,7 +9,8 @@
     "pm2:monit": "pm2 monit"
   },
   "dependencies": {
-    "pm2": "^5.4.3",
-    "node-cron": "^3.0.3"
+    "lodash": "^4.17.23",
+    "node-cron": "^3.0.3",
+    "pm2": "^5.4.3"
   }
 }

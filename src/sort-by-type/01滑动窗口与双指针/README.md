@@ -7,6 +7,31 @@
 - 滑动窗口适用的题目往往具有 **单调性**
 
 ## 一、定长滑动窗口
+
+### 模板（JS 伪代码）：入-更新-出
+```js
+// 固定窗口大小 k
+// 维护窗口统计量（sum / cnt / map ...），每次右端点 i 右移一格
+let ans = /* init */
+let win = /* 统计量 */
+
+for (let i = 0; i < n; i++) {
+  // 入：a[i] 进入窗口
+  updateIn(win, a[i])
+
+  // 尚未形成第一个完整窗口
+  if (i < k - 1) continue
+
+  // 更新：窗口 [i-k+1, i] 已形成
+  ans = updateAns(ans, win)
+
+  // 出：a[i-k+1] 离开窗口，为下一轮做准备
+  updateOut(win, a[i - k + 1])
+}
+
+return ans
+```
+
 **1. 题目类型**
 - 题目明确说明需要 **找一个大小为k** 的子数组（列表）、字符串，使其满足题目条件
 - 题目要求在**固定大小的窗口上进行统计或优化**，例如 “统计该窗口内某类元素的个数”，或 “计算和、最大值、平均值等”
@@ -29,6 +54,32 @@
 > 注：滑动窗口相当于在维护一个队列。右指针的移动可以视作入队，左指针的移动可以视作出队。
 
 ### (一)越短越合法-求最长/最大
+
+### 模板（JS 伪代码）：右扩，违法则左缩（求最长）
+```js
+// 目标：在窗口合法(valid)时，最大化窗口长度
+let left = 0
+let ans = 0
+let win = /* 统计量 */
+
+for (let right = 0; right < n; right++) {
+  // 入：a[right]
+  updateIn(win, a[right])
+
+  // 一旦不合法，就收缩到重新合法
+  while (!valid(win)) {
+    // 出：a[left]
+    updateOut(win, a[left])
+    left++
+  }
+
+  // 现在 [left, right] 合法，更新最长
+  ans = Math.max(ans, right - left + 1)
+}
+
+return ans
+```
+
 **1. 题目类型**
 > “越短越合法”是指：在滑动窗口问题中，窗口的长度越短，就越容易满足题目所给的“合法”条件；随着窗口变长，条件被破坏的可能性越大，窗口会变得“不合法”。
 - 题目要求在**窗口内的元素满足某种条件**的情况下，求窗口的最大长度或个数。
@@ -39,6 +90,31 @@
 对于这类“求最长”的问题，当右指针移动导致窗口不合法时，我们必须收缩左边界（让窗口变短），直到窗口重新合法。这正是滑动窗口的标准策略：先扩展右边界，一旦不合法，就收缩左边界，在合法范围内记录最长长度。
 
 ### (二)越长越合法-求最短/最小
+
+### 模板（JS 伪代码）：右扩到合法，尽量左缩（求最短）
+```js
+// 目标：找到所有合法窗口中长度最小的
+let left = 0
+let ans = Infinity
+let win = /* 统计量 */
+
+for (let right = 0; right < n; right++) {
+  // 入：a[right]
+  updateIn(win, a[right])
+
+  // 只要合法，就不断尝试收缩来变短
+  while (valid(win)) {
+    ans = Math.min(ans, right - left + 1)
+
+    // 出：a[left]
+    updateOut(win, a[left])
+    left++
+  }
+}
+
+return ans === Infinity ? 0 : ans
+```
+
 **1. 题目类型**
 > “越长越合法”是指：在滑动窗口问题中，窗口的长度越长，就越容易满足题目所给的“合法”条件；随着窗口变短，条件被破坏的可能性越大，窗口会变得“不合法”。
 - 题目要求在**窗口内的元素满足某种条件**的情况下，求窗口的最小长度或个数。
@@ -50,17 +126,98 @@
 
 ## 三、求子数组个数
 ### (一)越短越合法
+
+### 模板（JS 伪代码）：计数（ans += right-left+1）
+```js
+// 统计满足条件的子数组个数（条件：越短越容易合法）
+let left = 0
+let ans = 0
+let win = /* 统计量 */
+
+for (let right = 0; right < n; right++) {
+  // 入：a[right]
+  updateIn(win, a[right])
+
+  while (!valid(win)) {
+    // 出：a[left]
+    updateOut(win, a[left])
+    left++
+  }
+
+  // 以 right 为右端点的合法子数组个数
+  ans += right - left + 1
+}
+
+return ans
+```
+
 **1.解题思路**
 一般要写 ans += right - left + 1。
 内层循环结束后，[left,right] 这个子数组是满足题目要求的。由于子数组越短，越能满足题目要求，所以除了 [left,right]，还有 [left+1,right],[left+2,right],…,[right,right] 都是满足要求的。也就是说，当右端点固定在 right 时，左端点在 left,left+1,left+2,…,right 的所有子数组都是满足要求的，这一共有 right−left+1 个。
 
 ### (二)越长越合法
+
+### 模板（JS 伪代码）：计数（ans += left）
+```js
+// 统计满足条件的子数组个数（条件：越长越容易合法）
+// 思维：维护“第一个不合法窗口”的 left，合法的是 [0..left-1] 作为左端点
+let left = 0
+let ans = 0
+let win = /* 统计量 */
+
+for (let right = 0; right < n; right++) {
+  // 入：a[right]
+  updateIn(win, a[right])
+
+  while (valid(win)) {
+    // 出：a[left]
+    updateOut(win, a[left])
+    left++
+  }
+
+  // 现在 [left, right] 不合法，而 [0..left-1, right] 都合法
+  ans += left
+}
+
+return ans
+```
+
 **1.解题思路**
 一般要写 ans += left。
 内层循环结束后，[left,right] 这个子数组是不满足题目要求的，但在退出循环之前的最后一轮循环，[left−1,right] 是满足题目要求的。由于子数组越长，越能满足题目要求，所以除了 [left−1,right]，还有 [left−2,right],[left−3,right],…,[0,right] 都是满足要求的。也就是说，当右端点固定在 right 时，左端点在 0,1,2,…,left−1 的所有子数组都是满足要求的，这一共有 left 个。
 我们关注的是 left−1 的合法性，而不是 left。
 
 ### (三)恰好型滑动窗口
+
+### 模板（JS 伪代码）：恰好 = 至多K - 至多(K-1)
+```js
+// 常用于：恰好 K 个不同元素 / 恰好 K 次某事件 / 和恰好为 K（若满足单调性条件）
+// 关键：先实现 atMost(K)，再相减得到 exactly(K)
+
+function atMost(K) {
+  let left = 0
+  let ans = 0
+  let win = /* 统计量 */
+
+  for (let right = 0; right < n; right++) {
+    // 入：a[right]
+    updateIn(win, a[right])
+
+    while (!validAtMost(win, K)) {
+      // 出：a[left]
+      updateOut(win, a[left])
+      left++
+    }
+
+    ans += right - left + 1
+  }
+
+  return ans
+}
+
+return atMost(K) - atMost(K - 1)
+```
+
 **1.解题思路**
 例如，要计算有多少个元素和恰好等于 k 的子数组，可以把问题变成：
 - 计算有多少个元素和 ≥k 的子数组。

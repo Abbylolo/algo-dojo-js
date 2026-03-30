@@ -17,7 +17,7 @@
  */
 
 /**
- * 法一：map维护
+ * 法一：map
  */
 var maxSum = function(nums) {
     // 维护左边每个数的最大数字（更新最大）
@@ -36,7 +36,7 @@ var maxSum = function(nums) {
 };
 
 /**
- * 法二：数组维护
+ * 法二：数组
  */
 var maxSum = function(nums) {
     const arr = new Array(10).fill(-Infinity)

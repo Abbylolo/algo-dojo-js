@@ -43,7 +43,7 @@ var countBeautifulPairs = function (nums) {
     return count
 };
 
-// 辗转相除法（欧几里德算法）求最大公因数
+// 辗转相除法（欧几里德算法）求最大公因数：用较大数除以较小数得余数；再用较小数除以上一步的余数；重复直到余数为0，此时的除数就是最大公因数
 function gcd(a, b) {
     return b == 0 ? a : gcd(b, a % b)
 }

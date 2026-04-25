@@ -11,7 +11,7 @@
  */
 var NumArray = function (nums) {
     // 计算前缀和数组（每个数前i个数的和）=> [l,r]的区间和=s[r+1]-s[l]
-    this.s = Array(nums.length - 1)
+    this.s = Array(nums.length + 1)
     this.s[0] = 0
     for (let i = 1; i <= nums.length; i++) {
         this.s[i] = nums[i - 1] + this.s[i - 1]

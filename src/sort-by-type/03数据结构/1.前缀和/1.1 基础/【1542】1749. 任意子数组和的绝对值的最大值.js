@@ -11,8 +11,14 @@
  * @param {number[]} nums
  * @return {number}
  */
+/**
+ * 法一：动态规划
+ * 思路：
+ * 1. 计算最大子串和和最小子串和（动态规划，以i为结尾的最小或最大子串）。f(i) = max(f(i-1)+x, x) = max(f(i-1),0) + x
+ * 2. 比较最大子串和和最小子串和的绝对值，取最大值
+ * 3. 返回最大值
+ * */
 var maxAbsoluteSum = function (nums) {
-    // 计算最大子串和和最小子串和（动态规划，以i为结尾的最小或最大子串），再比较
     let ans = 0, fMax = 0, fMin = 0
     for (const x of nums) {
         fMax = Math.max(fMax, 0) + x
@@ -22,9 +28,20 @@ var maxAbsoluteSum = function (nums) {
     return ans
 };
 
+/**
+ * 法二：前缀和
+ * 思路：子数组最大值 = 前缀和之差|num[j]-nums[i]|最大值 => 最大前缀和 - 最小前缀和
+ */
+var maxAbsoluteSum = function (nums) {
+    let minPrefix = 0, maxPrefix = 0, sum = 0
+    for (const x of nums) {
+        sum += x
+        maxPrefix = Math.max(maxPrefix, sum)
+        minPrefix = Math.min(minPrefix, sum)
+    }
+    return maxPrefix - minPrefix
+};
 
 
 // TEST
-console.log(maxAbsoluteSum([1, -3, 2, 3])) // 5
-console.log(maxAbsoluteSum([2, -5, 1, -4])) // 8
-console.log(maxAbsoluteSum([-10, 1])) // 10
+console.log(maxAbsoluteSum([1, -3, 2, 3, -4])) // 5

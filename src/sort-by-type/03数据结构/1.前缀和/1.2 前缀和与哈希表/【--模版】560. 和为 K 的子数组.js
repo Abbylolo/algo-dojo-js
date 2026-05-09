@@ -35,7 +35,7 @@ var subarraySum = function (nums, k) {
     let ans = 0, sum = 0
     const cnt = new Map()
     for (const num of nums) { // 枚举右s[j]
-        // 维护s[i-1]个数
+        // 维护[0,j-1]的前缀和cnt个数
         cnt.set(sum, (cnt.get(sum) ?? 0) + 1)
         sum += num
         // 统计当前数字下标前面有几个符合条件的s[i] = s[j] - k

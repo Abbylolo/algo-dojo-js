@@ -5,19 +5,25 @@
  * 如果闭区间 [left, right] 内每个整数都被 ranges 中 至少一个 区间覆盖，那么请你返回 true ，否则返回 false 。
  * 已知区间 ranges[i] = [starti, endi] ，如果整数 x 满足 starti <= x <= endi ，那么我们称整数x 被覆盖了。
  */
+/**
+ * @param {number[][]} ranges
+ * @param {number} left
+ * @param {number} right
+ * @return {boolean}
+ */
+// 1、计算差分数组 2、前缀和判断
 var isCovered = function (ranges, left, right) {
-    const diff = new Array(52).fill(0); // 差分数组
-    for (const [l, r] of ranges) {
-        diff[l]++;
-        diff[r + 1]--;
+    const d = Array(52).fill(0)
+    for (const [from, to] of ranges) {
+        d[from]++
+        d[to + 1]--
     }
-    // 前缀和
-    let curr = 0;
-    for (let i = 1; i < 51; i++) {
-        curr += diff[i];
-        if (left <= i && i <= right && curr <= 0) {
-            return false;
+    let s = 0
+    for (let i = 1; i <= right; i++) {
+        s += d[i]
+        if (i >= left && s <= 0) {
+            return false
         }
     }
-    return true;
+    return true
 };

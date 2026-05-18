@@ -6,11 +6,15 @@
     "pm2:restart": "pm2 restart snippet-updater",
     "pm2:logs": "pm2 logs snippet-updater",
     "pm2:status": "pm2 status",
-    "pm2:monit": "pm2 monit"
+    "pm2:monit": "pm2 monit",
+    "generate-ppt": "node scripts/generatePPT.js"
   },
   "dependencies": {
     "lodash": "^4.17.23",
     "node-cron": "^3.0.3",
     "pm2": "^5.4.3"
+  },
+  "devDependencies": {
+    "pptxgenjs": "^4.0.1"
   }
 }

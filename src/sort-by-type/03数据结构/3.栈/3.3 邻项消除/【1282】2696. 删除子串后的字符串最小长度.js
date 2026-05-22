@@ -13,11 +13,10 @@
  * @return {number}
  */
 var minLength = function (s) {
-    const arr = s.split('')
     const ans = []
-    for (const c of arr) {
-        const endChar = ans.length ? ans[ans.length - 1] : ''
-        if ((c === 'B' && endChar === 'A') || (c === 'D' && endChar === 'C')) {
+    const pairs = { 'B': 'A', 'D': 'C' }
+    for (const c of s) {
+        if (ans.length && ans.at(-1) === pairs[c]) {
             ans.pop()
         } else {
             ans.push(c)
